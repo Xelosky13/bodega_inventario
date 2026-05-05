@@ -1,8 +1,5 @@
 package com.proyecto_inventario.proyecto_inventario.model;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,10 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,22 +20,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "ordenes_recepcion")
-public class OrdenRecepcion {
+@Table(name = "items_pedido")
+public class ItemPedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull(message = "La fecha de recepcion es obligatoria")
-    @PastOrPresent(message = "La fecha no puede ser futura")
+    @NotNull(message = "La cantidad es obligatoria")
+    @Min(value = 1, message = "La cantidad minima a pedir es 1")
     @Column(nullable = false)
-    private LocalDate fechaRecepcion;
+    private Integer cantidad;
 
     @ManyToOne
-    @JoinColumn(name = "proveedor_id", nullable =  false)
-    private Proveedor proveedor;
+    @JoinColumn(name = "pedido_id", nullable = false)
+    private Pedido pedido;
 
-    @OneToMany(mappedBy = "orden")
-    private List<DetalleRecepcion> detalles;
+    @ManyToOne
+    @JoinColumn(name = "producto_id", nullable = false)
+    private Producto producto;
+
+    
+
 }

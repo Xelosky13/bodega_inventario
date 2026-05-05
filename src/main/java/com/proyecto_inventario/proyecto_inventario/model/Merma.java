@@ -1,7 +1,6 @@
 package com.proyecto_inventario.proyecto_inventario.model;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,10 +9,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,22 +25,30 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "ordenes_recepcion")
-public class OrdenRecepcion {
+@Table(name = "mermas")
+public class Merma {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull(message = "La fecha de recepcion es obligatoria")
+    @NotNull(message = "La fecha de la merma es obligatoria")
     @PastOrPresent(message = "La fecha no puede ser futura")
     @Column(nullable = false)
-    private LocalDate fechaRecepcion;
+    private LocalDate fechaReporte;
+
+    @NotNull(message = "La cantidad mermada es obligatoria")
+    @Min(value = 1, message = "La cantidad mermada debe ser al menos 1")
+    @Column(nullable = false)
+    private Integer cantidad;
+
+    @NotBlank(message = "Debe indicar el motivo de la merma")
+    @Size(min = 5, max = 255, message = "El motivo debe tener entre 5 y 255 caracteres")
+    @Column(nullable = false, length = 255)
+    private String motivo;
 
     @ManyToOne
-    @JoinColumn(name = "proveedor_id", nullable =  false)
-    private Proveedor proveedor;
-
-    @OneToMany(mappedBy = "orden")
-    private List<DetalleRecepcion> detalles;
+    @JoinColumn(nullable = false)
+    @NotNull(message = "Debe asociar un producto a la merma")
+    private Producto producto;
 }

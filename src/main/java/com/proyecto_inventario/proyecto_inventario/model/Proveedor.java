@@ -1,7 +1,6 @@
 package com.proyecto_inventario.proyecto_inventario.model;
 
 import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,11 +36,17 @@ public class Proveedor {
     @Size(min = 8, max = 10, message = "Rut debe tener entre 8 a 10 caracteres")
     @Column(nullable = false, length = 10)
     private String rut;
-    
+
+    @NotBlank(message = "El teléfono es obligatorio para despachos")
+     @Size(min = 9, max = 9, message = "Telefono debe tener 9 digitos")
+    @Column(nullable = false,length = 9)
+    private String telefono;
+
+    @NotBlank(message = "Nombre Contacto es obligatorio")
+    @Size(min = 3, max = 100, message = "Nombre debe tener entre 3 a 100 caracteres")
+    @Column(nullable = false, length = 100)
+    private String nombreContacto;
+
     @OneToMany(mappedBy = "proveedor")
     private List<OrdenRecepcion> ordenes;
-
-
-    
-
 }
