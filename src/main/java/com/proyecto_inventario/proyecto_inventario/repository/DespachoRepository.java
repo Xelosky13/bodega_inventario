@@ -1,5 +1,5 @@
 package com.proyecto_inventario.proyecto_inventario.repository;
 
-public class DespachoRepository {
+public interface DespachoRepository {
 
 }
