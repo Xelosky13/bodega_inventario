@@ -37,11 +37,6 @@ public class Pedido {
     @Column(nullable = false)
     private LocalDateTime fechaPedido;
 
-    @NotBlank(message = "El cliente es obligatorio")
-    @Size(min = 3, max = 100, message = "El cliente debe tener entre 3 y 100 caracteres")
-    @Column(nullable = false, length = 100)
-    private String cliente;
-
     @NotBlank(message = "El estado del pedido es obligatorio")
     @Size(min = 7, max = 13, message = "Estado debe ser Pendiente, Picking o Completado" )
     @Column(nullable = false, length = 13)
