@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proyecto_inventario.proyecto_inventario.model.Ubicacion;
-import com.proyecto_inventario.proyecto_inventario.repository.UbiacionRepository;
+import com.proyecto_inventario.proyecto_inventario.repository.UbicacionRepository;
 
 @Service
 public class UbicacionService {
     @Autowired
-    private UbiacionRepository repository;
+    private UbicacionRepository repository;
 
     public Ubicacion buscarPorId(Integer id) {
         Ubicacion ubicacion = repository.findUbicacionById(id);
