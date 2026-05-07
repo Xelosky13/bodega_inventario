@@ -10,6 +10,6 @@ public class DespachoDTO {
     private LocalDateTime fechaSalida;
     private String transportista;
     private String patenteVehiculo;
-    private Integer idPedido;
+    private Integer idPiking;
     private String nombreCliente;
 }

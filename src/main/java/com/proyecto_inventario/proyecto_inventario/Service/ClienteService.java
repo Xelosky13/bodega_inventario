@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proyecto_inventario.proyecto_inventario.DTO.ClienteDTO;
+import com.proyecto_inventario.proyecto_inventario.DTO.DespachoDTO;
 import com.proyecto_inventario.proyecto_inventario.DTO.PedidoDTO;
 import com.proyecto_inventario.proyecto_inventario.model.Cliente;
 import com.proyecto_inventario.proyecto_inventario.repository.ClienteRepository;
+import com.proyecto_inventario.proyecto_inventario.repository.DespachoRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -18,13 +20,11 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class ClienteService {
 
-    private final PedidoRepository pedidoRepository;
+    @Autowired
+    private DespachoRepository despachoRepository;
+    
     @Autowired
     private ClienteRepository clienteRepository;
-
-    ClienteService(PedidoRepository pedidoRepository) {
-        this.pedidoRepository = pedidoRepository;
-    }
 
     public ClienteDTO convertirADTO(Cliente cliente){
         ClienteDTO dto = new ClienteDTO();
@@ -75,7 +75,18 @@ public class ClienteService {
         if(cliente.getId() != null){
             actualizado.setId(cliente.getId());
         }
-        if(cliente.getHistorialPedidos())
-
+        if(cliente.getHistorialPedidos() != null){
+            actualizado.getHistorialPedidos().clear();
+            cliente.getHistorialPedidos().forEach(pedido -> {
+                pedido.setCliente(actualizado);
+                actualizado.getHistorialPedidos().add(pedido);
+            });
+        }
+        return clienteRepository.save(actualizado)
+    }
+    public List<DespachoDTO> buscarDespachosPorNombreCliente(String nombreCliente){
+        return despachoRepository.buscarDespachosPorNombreCliente(nombreCliente).stream()
+                .map(this::convertirADTO)
+                .toList();
     }
 }
