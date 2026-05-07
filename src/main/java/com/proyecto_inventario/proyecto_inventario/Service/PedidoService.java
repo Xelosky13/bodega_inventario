@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.proyecto_inventario.proyecto_inventario.DTO.ItemPedidoDTO;
 import com.proyecto_inventario.proyecto_inventario.DTO.PedidoDTO;
+import com.proyecto_inventario.proyecto_inventario.model.ItemPedido;
 import com.proyecto_inventario.proyecto_inventario.model.Pedido;
+import com.proyecto_inventario.proyecto_inventario.model.Producto;
+import com.proyecto_inventario.proyecto_inventario.repository.ItemPedidoRepository;
 import com.proyecto_inventario.proyecto_inventario.repository.PedidoRepository;
 
 import jakarta.transaction.Transactional;
@@ -18,6 +21,12 @@ public class PedidoService {
     
     @Autowired
     private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
 
     public PedidoDTO convertirADTO(Pedido pedido){
         PedidoDTO dto = new PedidoDTO();
@@ -60,6 +69,21 @@ public class PedidoService {
 
     public Pedido guardarPedido(Pedido pedido){
         return pedidoRepository.save(pedido);
+    }
+
+    public String añadirItemAPedido(Integer pedidoId, Integer itemsId, Integer productoId, Integer cantidad){
+        Pedido pedido = pedidoRepository.findById(pedidoId)
+            .orElseThrow(() -> new RuntimeException("Error: Pedido no existe"));
+        Producto producto = productoRepository.findById(productoId)
+            .orElseThrow(() -> new RuntimeException("Error : Producto no existe"));
+        ItemPedido nuevoItem = new ItemPedido();
+        nuevoItem.setPedido(pedido);
+        nuevoItem.setProducto(producto);
+        nuevoItem.setCantidad(cantidad);
+        itemPedidoRepository.save(nuevoItem);
+
+        return "Exito: Se agregaron "+ cantidad + "unidades de " + 
+                producto.getNombre() + "al Pedido #" + pedidoId;
     }
 
     public Pedido actualizarPedido(Integer id,Pedido pedido){
