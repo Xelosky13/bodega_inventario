@@ -75,7 +75,7 @@ public class ClienteService {
         if(cliente.getId() != null){
             actualizado.setId(cliente.getId());
         }
-        if(cliente.getHistorialPedidos() )
+        if(cliente.getHistorialPedidos())
 
     }
 }

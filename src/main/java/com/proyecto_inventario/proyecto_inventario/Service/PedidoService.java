@@ -12,6 +12,7 @@ import com.proyecto_inventario.proyecto_inventario.model.Pedido;
 import com.proyecto_inventario.proyecto_inventario.model.Producto;
 import com.proyecto_inventario.proyecto_inventario.repository.ItemPedidoRepository;
 import com.proyecto_inventario.proyecto_inventario.repository.PedidoRepository;
+import com.proyecto_inventario.proyecto_inventario.repository.ProductoRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -87,7 +88,8 @@ public class PedidoService {
     }
 
     public Pedido actualizarPedido(Integer id,Pedido pedido){
-        Pedido pedido2 = pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido no existe"));
+        Pedido pedido2 = pedidoRepository.findById(id).orElseThrow(() -> 
+                new RuntimeException("Pedido no existe"));
         if(pedido.getCliente() != null){
             pedido2.setCliente(pedido.getCliente()); 
         }
@@ -97,10 +99,14 @@ public class PedidoService {
         if(pedido.getFechaPedido() != null){
             pedido2.setFechaPedido(pedido.getFechaPedido());
         }
-        if(pedido.getId() != null){
-            pedido2.setItems(pedido.getItems());
+        if(pedido.getItems() != null){
+            pedido2.getItems().clear();
+            pedido.getItems().forEach(item -> {
+                item.setPedido(pedido2);
+                pedido2.getItems().add(item);
+            });
         }
-        return pedidoRepository.save(pedido);
+        return pedidoRepository.save(pedido2);
     }
 
     public List<PedidoDTO> buscarPendientesPorCliente(String rut){
