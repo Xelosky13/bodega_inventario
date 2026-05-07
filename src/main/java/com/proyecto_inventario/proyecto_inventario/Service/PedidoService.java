@@ -1,4 +1,4 @@
-package com.proyecto_inventario.Service;
+package com.proyecto_inventario.proyecto_inventario.Service;
 
 import java.util.List;
 

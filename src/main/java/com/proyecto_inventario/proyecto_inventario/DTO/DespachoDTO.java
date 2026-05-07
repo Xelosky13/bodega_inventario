@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class DesoachoDTO {
+public class DespachoDTO {
     private Integer id;
     private LocalDateTime fechaSalida;
     private String transportista;
