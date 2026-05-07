@@ -46,7 +46,7 @@ public class Picking {
 
     @OneToOne
     @JoinColumn(name = "pedido_id",nullable = false, unique = true)
-    @NotNull(message = "Se debe asignar un operario picking")
+    @NotNull(message = "Se debe asignar un pedido")
     private Pedido pedido;
 
     @ManyToOne

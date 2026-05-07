@@ -1,5 +1,6 @@
 package com.proyecto_inventario.proyecto_inventario.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,11 @@ public class DespachoService {
         DespachoDTO dto =new DespachoDTO();
         dto.setId(despacho.getId());
         dto.setFechaSalida(despacho.getFechaSalida());
-        dto.setIdPiking(despacho.getPicking().getId());
         dto.setNombreCliente(despacho.getPicking().getPedido().getCliente().getNombre());
         dto.setPatenteVehiculo(despacho.getPatenteVehiculo());
         dto.setTransportista(despacho.getTransportista());
+        if(despacho.getPicking() != null)
+            dto.setNombreCliente(despacho.getPicking().getPedido().getCliente().getNombre());  
         return dto;
     }
 
@@ -80,4 +82,11 @@ public class DespachoService {
         }
         return despachoRepository.save(despacho2);
     }
+
+    public List<DespachoDTO> buscarPorCamionYFecha(String patente, LocalDateTime fecha){
+        return despachoRepository.buscarPorCamionYFecha(patente, fecha).stream()
+                .map(this::convertirADTO)
+                .toList();
+    }
+    
 }

@@ -26,6 +26,9 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private DespachoDTO despachoDTO;
+
     public ClienteDTO convertirADTO(Cliente cliente){
         ClienteDTO dto = new ClienteDTO();
         dto.setId(cliente.getId());
@@ -82,10 +85,10 @@ public class ClienteService {
                 actualizado.getHistorialPedidos().add(pedido);
             });
         }
-        return clienteRepository.save(actualizado)
+        return clienteRepository.save(actualizado);
     }
-    public List<DespachoDTO> buscarDespachosPorNombreCliente(String nombreCliente){
-        return despachoRepository.buscarDespachosPorNombreCliente(nombreCliente).stream()
+    public List<ClienteDTO> buscarDespachosPorNombreCliente(String nombreCliente){
+        return clienteRepository.buscarDespachosPorNombreCliente(nombreCliente).stream()
                 .map(this::convertirADTO)
                 .toList();
     }

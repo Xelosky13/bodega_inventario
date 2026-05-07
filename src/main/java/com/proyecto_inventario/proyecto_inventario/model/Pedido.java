@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.OneToMany;
-
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,8 +45,12 @@ public class Pedido {
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
     @NotNull(message = "El pedido debe estar asociado a un cliente")
-    private Cliente Cliente;
+    private Cliente cliente;
 
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> items;
+
+
+    @OneToOne(mappedBy = "pedido")
+    private Picking picking;
 }
