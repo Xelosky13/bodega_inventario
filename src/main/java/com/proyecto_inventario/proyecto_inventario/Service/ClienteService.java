@@ -38,6 +38,13 @@ public class ClienteService {
         return convertirADTO(cliente);
     }
 
+    public ClienteDTO buscarPorRut(String rut){
+        Cliente cliente = clienteRepository.findByRut(rut);
+        if(cliente == null)
+                throw new RuntimeException("Cliente no encontrado");
+        return convertirADTO(cliente);              
+    }
+
     public String eliminar (Integer id){
         try {
             Cliente cliente = clienteRepository.findById(id)
@@ -76,4 +83,6 @@ public class ClienteService {
         }
         return clienteRepository.save(actualizado);
     }
+
+
 }

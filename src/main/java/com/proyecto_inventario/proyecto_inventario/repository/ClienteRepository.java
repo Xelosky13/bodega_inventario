@@ -12,7 +12,7 @@ import com.proyecto_inventario.proyecto_inventario.model.Despacho;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
-    List<Cliente> findByRut(String rut);
+    Cliente findByRut(String rut);
 
     @Query("SELECT d FROM Despacho d WHERE d.picking.pedido.cliente.nombre = :nombreCliente")
     List<Despacho> buscarDespachosPorNombreCliente(@Param("nombreCliente") String nombreCliente);
