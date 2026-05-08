@@ -1,4 +1,4 @@
-package com.proyecto_inventario.proyecto_inventario.service;
+package com.proyecto_inventario.proyecto_inventario.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
