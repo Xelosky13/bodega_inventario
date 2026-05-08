@@ -25,7 +25,7 @@ public class ItemPedidoService {
         return dto;
     }
 
-    public List<ItemPedidoDTO> obtenerTodos(Integer id){
+    public List<ItemPedidoDTO> obtenerTodos(){
         return itemPedidoRepository.findAll().stream()
                 .map(this :: convertirADTO)
                 .toList();
