@@ -11,6 +11,7 @@ import com.proyecto_inventario.proyecto_inventario.DTO.ClienteDTO;
 import com.proyecto_inventario.proyecto_inventario.DTO.DespachoDTO;
 import com.proyecto_inventario.proyecto_inventario.DTO.PedidoDTO;
 import com.proyecto_inventario.proyecto_inventario.model.Cliente;
+import com.proyecto_inventario.proyecto_inventario.model.Despacho;
 import com.proyecto_inventario.proyecto_inventario.repository.ClienteRepository;
 import com.proyecto_inventario.proyecto_inventario.repository.DespachoRepository;
 
@@ -86,10 +87,5 @@ public class ClienteService {
             });
         }
         return clienteRepository.save(actualizado);
-    }
-    public List<ClienteDTO> buscarDespachosPorNombreCliente(String nombreCliente){
-        return clienteRepository.buscarDespachosPorNombreCliente(nombreCliente).stream()
-                .map(this::convertirADTO)
-                .toList();
     }
 }
