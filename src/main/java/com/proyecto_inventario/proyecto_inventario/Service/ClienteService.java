@@ -1,19 +1,13 @@
 package com.proyecto_inventario.proyecto_inventario.Service;
 
-import com.proyecto_inventario.proyecto_inventario.repository.PedidoRepository;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proyecto_inventario.proyecto_inventario.DTO.ClienteDTO;
-import com.proyecto_inventario.proyecto_inventario.DTO.DespachoDTO;
-import com.proyecto_inventario.proyecto_inventario.DTO.PedidoDTO;
 import com.proyecto_inventario.proyecto_inventario.model.Cliente;
-import com.proyecto_inventario.proyecto_inventario.model.Despacho;
 import com.proyecto_inventario.proyecto_inventario.repository.ClienteRepository;
-import com.proyecto_inventario.proyecto_inventario.repository.DespachoRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -21,14 +15,11 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class ClienteService {
 
-    @Autowired
-    private DespachoRepository despachoRepository;
-    
+
     @Autowired
     private ClienteRepository clienteRepository;
 
     @Autowired
-    private DespachoDTO despachoDTO;
 
     public ClienteDTO convertirADTO(Cliente cliente){
         ClienteDTO dto = new ClienteDTO();
