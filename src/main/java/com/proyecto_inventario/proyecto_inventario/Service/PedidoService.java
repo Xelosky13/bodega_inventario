@@ -72,7 +72,7 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
-    public String añadirItemAPedido(Integer pedidoId, Integer itemsId, Integer productoId, Integer cantidad){
+    public String añadirItemAPedido(Integer pedidoId, Integer productoId, Integer cantidad){
         Pedido pedido = pedidoRepository.findById(pedidoId)
             .orElseThrow(() -> new RuntimeException("Error: Pedido no existe"));
         Producto producto = productoRepository.findById(productoId)
@@ -109,9 +109,8 @@ public class PedidoService {
         return pedidoRepository.save(pedido2);
     }
 
-    public List<PedidoDTO> buscarPendientesPorCliente(String rut){
-        return pedidoRepository.buscarPendientesPorCliente(rut).stream()
-            .map(this :: convertirADTO)
-            .toList();
+    public List<PedidoDTO> obtenerPendientesPorCliente(String rut){
+        List<Pedido> pendientes = pedidoRepository.buscarPendientesPorCliente(rut);
+        return pendientes.stream().map(this::convertirADTO).toList();
     }
 }

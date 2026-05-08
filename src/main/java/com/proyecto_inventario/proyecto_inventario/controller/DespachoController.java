@@ -6,9 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,5 +75,44 @@ public class DespachoController {
         }
     }
 
-    
+    @PatchMapping("/{id}")
+    public ResponseEntity<Despacho> editarDespacho(@PathVariable Integer id, @RequestBody Despacho despacho) {
+        try {
+            Despacho editado = despachoService.guardarDespacho(despacho);
+            return new ResponseEntity<>(editado, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }    
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Despacho> actualizarCliente(@PathVariable Integer id, @RequestBody Despacho despacho){
+        try{
+            Despacho actualizado = despachoService.actualizarDespacho( id, despacho);
+            return new ResponseEntity<>(actualizado, HttpStatus.OK);
+        }catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarDespacho(@PathVariable Integer id) {
+        String resultado = despachoService.eliminar(id);
+        
+        if (resultado.contains("exitosamente")) {
+            return new ResponseEntity<>(resultado, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/buscar-por-cliente")
+    public ResponseEntity<List<DespachoDTO>> buscarPorCliente(@RequestParam String nombre){
+        List<DespachoDTO> resultados = despachoService.buscarPorNombreCliente(nombre);
+        if(resultados.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(resultados);
+    }
+   
 }

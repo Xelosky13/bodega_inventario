@@ -14,4 +14,7 @@ public interface DespachoRepository extends JpaRepository<Despacho, Integer>{
 
     @Query("SELECT d FROM Despacho d WHERE d.pantenteVehiculo = :patente AND d.fechaSalida")
     List<Despacho> buscarPorCamionYFecha(@Param("patente") String patente, @Param("fecha") LocalDate fecha);
+    
+    @Query("SELECT d FROM Despacho d WHERE d.picking.pedido.cliente.nombre = :nombreCliente")
+    List<Despacho> buscarDespachosPorNombreCliente(@Param("nombreCliente") String nombreCliente);
 }

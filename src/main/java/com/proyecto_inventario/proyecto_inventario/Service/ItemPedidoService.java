@@ -68,4 +68,9 @@ public class ItemPedidoService {
         }
         return itemPedidoRepository.save(actualizado);  
     }
+
+    public Integer obtenerTotalUnidadesPorPedido(Integer idPedido){
+        Integer total = itemPedidoRepository.sumarTotalProductos(idPedido);
+        return(total != null) ? total : 0;
+    }
 }

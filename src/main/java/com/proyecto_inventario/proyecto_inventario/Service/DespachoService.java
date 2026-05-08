@@ -95,5 +95,10 @@ public class DespachoService {
                 .map(this::convertirADTO)
                 .toList();
     }
+
+    public List<DespachoDTO> buscarPorNombreCliente(String nombre){
+        List<Despacho> despachos = despachoRepository.buscarDespachosPorNombreCliente(nombre);
+        return despachos.stream().map(this::convertirADTO).toList();
+    }
     
 }
