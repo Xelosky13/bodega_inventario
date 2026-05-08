@@ -9,7 +9,7 @@ import com.proyecto_inventario.proyecto_inventario.repository.ProveedorRepositor
 @Service
 public class ProveedorService {
     @Autowired
-    public ProveedorRepository proveRepo;
+    private ProveedorRepository proveRepo;
 
     public Proveedor buscarPorId(Integer id) {
         return proveRepo.FindById(id);
