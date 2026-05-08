@@ -15,11 +15,8 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class ClienteService {
 
-
     @Autowired
     private ClienteRepository clienteRepository;
-
-    @Autowired
 
     public ClienteDTO convertirADTO(Cliente cliente){
         ClienteDTO dto = new ClienteDTO();
