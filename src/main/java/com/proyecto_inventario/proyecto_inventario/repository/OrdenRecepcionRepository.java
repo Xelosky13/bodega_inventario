@@ -1,7 +1,6 @@
 package com.proyecto_inventario.proyecto_inventario.repository;
 
 import java.time.LocalDate;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +12,5 @@ public interface OrdenRecepcionRepository extends JpaRepository<OrdenRecepcion, 
     public OrdenRecepcion findByfechaRecepcion(LocalDate fechaRecepcion);
 
     public OrdenRecepcion findByProveedor(Integer Id);
+
 }

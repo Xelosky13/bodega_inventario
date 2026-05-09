@@ -1,6 +1,8 @@
 package com.proyecto_inventario.proyecto_inventario.repository;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,9 +16,7 @@ public interface DetalleRecepcionRepository extends JpaRepository<DetalleRecepci
 
     public DetalleRecepcion findbyOrden(Integer Id);
 
-    public DetalleRecepcion findByCantidad(Integer cantidad);
-
-    public DetalleRecepcion findByEstado(String estado);
+    public List<DetalleRecepcion> findByEstado(String estado);
 
     public DetalleRecepcion findByProducto(Producto producto);
 
