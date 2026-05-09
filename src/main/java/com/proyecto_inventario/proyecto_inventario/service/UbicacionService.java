@@ -3,6 +3,7 @@ package com.proyecto_inventario.proyecto_inventario.service;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.proyecto_inventario.proyecto_inventario.DTO.UbicacionDTO;
 import com.proyecto_inventario.proyecto_inventario.model.Ubicacion;
 import com.proyecto_inventario.proyecto_inventario.repository.UbicacionRepository;
 
@@ -11,27 +12,40 @@ public class UbicacionService {
     @Autowired
     private UbicacionRepository repository;
 
-    public Ubicacion buscarPorId(Integer id) {
-        Ubicacion ubicacion = repository.findUbicacionById(id);
-
-        return ubicacion;
-    }
-
-    public List<Ubicacion> ubicaciones() {
-        return repository.findAll();
-    }
-
-    public ArrayList<Ubicacion> buscarPorPasillo(Integer pasillo) {
-        return repository.findByPasillo(pasillo);
+    public UbicacionDTO mappearADto(Ubicacion ubi) {
+        UbicacionDTO dto = new UbicacionDTO();
+        dto.setDescripcion(ubi.getDescripcion());
+        dto.setEstante(ubi.getEstante());
+        dto.setPasillo(ubi.getPasillo());
+        return dto;
 
     }
 
-    public ArrayList<Ubicacion> buscarPorDescripcion(String descripcion) {
-        return repository.findByDescripcionAllIgnoreCase(descripcion);
+    public UbicacionDTO buscarPorId(Integer id) {
+        Ubicacion ubicacion = repository.findById(id).orElse(null);
+
+        return this.mappearADto(ubicacion);
     }
 
-    public ArrayList<Ubicacion> buscarPorEstante(Integer estante) {
-        return repository.findByEstante(estante);
+    public List<UbicacionDTO> ubicaciones() {
+        List<Ubicacion> ubis = repository.findAll();
+        return ubis.stream().map(this::mappearADto).toList();
+    }
+
+    public List<UbicacionDTO> buscarPorPasillo(Integer pasillo) {
+        List<Ubicacion> ubis = repository.findByPasillo(pasillo);
+        return ubis.stream().map(this::mappearADto).toList();
+
+    }
+
+    public List<UbicacionDTO> buscarPorDescripcion(String descripcion) {
+        List<Ubicacion> ubis = repository.findByDescripcionAllIgnoreCase(descripcion);
+        return ubis.stream().map(this::mappearADto).toList();
+    }
+
+    public List<UbicacionDTO> buscarPorEstante(Integer estante) {
+        List<Ubicacion> ubis = repository.findByEstante(estante);
+        return ubis.stream().map(this::mappearADto).toList();
     }
 
     public void eliminarPorId(Integer id) {
@@ -39,8 +53,9 @@ public class UbicacionService {
 
     }
 
-    public Ubicacion guardarUbicacion(Ubicacion ubi) {
-        return repository.save(ubi);
+    public UbicacionDTO guardarUbicacion(Ubicacion ubi) {
+        Ubicacion ubic = repository.save(ubi);
+        return this.mappearADto(ubic);
     }
 
     public void actualizarUbicacion(Integer id, Ubicacion ubi) {

@@ -37,7 +37,7 @@ public class OrdenRecepcion {
     private LocalDate fechaRecepcion;
 
     @ManyToOne
-    @JoinColumn(name = "proveedor_id", nullable =  false)
+    @JoinColumn(name = "proveedor_id", nullable = false)
     private Proveedor proveedor;
 
     @OneToMany(mappedBy = "orden")
