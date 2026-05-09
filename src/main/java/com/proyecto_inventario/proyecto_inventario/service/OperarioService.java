@@ -1,45 +1,45 @@
 package com.proyecto_inventario.proyecto_inventario.service;
 
-import com.proyecto_inventario.proyecto_inventario.model.Producto;
-import com.proyecto_inventario.proyecto_inventario.repository.ProductoRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.proyecto_inventario.proyecto_inventario.model.Operario;
+import com.proyecto_inventario.proyecto_inventario.repository.OperarioRepository;
 
 @Service
-public class ProductoService {
+public class OperarioService {
 
     @Autowired
-    private ProductoRepository productoRepository;
+    private OperarioRepository operarioRepository;
 
-    public List<Producto> listarTodos() {
-        return productoRepository.findAll();
+    public List<Operario> listarTodos() {
+        return operarioRepository.findAll();
     }
 
-    public Producto obtenerPorId(Integer id) {
-        return productoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
+    public Operario obtenerPorId(Integer id) {
+        return operarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Operario no encontrado con id: " + id));
     }
 
-    public Producto crear(Producto producto) {
-        return productoRepository.save(producto);
+    public Operario crear(Operario operario) {
+        return operarioRepository.save(operario);
     }
 
-    public Producto actualizar(Integer id, Producto producto) {
-        Producto existente = productoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
-        existente.setNombre(producto.getNombre());
-        existente.setSku(producto.getSku());
-        existente.setStockActual(producto.getStockActual());
-        existente.setUbicacion(producto.getUbicacion());
-        return productoRepository.save(existente);
+    public Operario actualizar(Integer id, Operario operario) {
+        Operario existente = operarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Operario no encontrado con id: " + id));
+        existente.setNombre(operario.getNombre());
+        existente.setRut(operario.getRut());
+        existente.setTurno(operario.getTurno());
+        return operarioRepository.save(existente);
     }
 
     public void eliminar(Integer id) {
-        if (!productoRepository.existsById(id)) {
-            throw new RuntimeException("Producto no encontrado con id: " + id);
+        if (!operarioRepository.existsById(id)) {
+            throw new RuntimeException("Operario no encontrado con id: " + id);
         }
-        productoRepository.deleteById(id);
+        operarioRepository.deleteById(id);
     }
 }

@@ -19,7 +19,7 @@ public class MermaController {
     @PostMapping
     public ResponseEntity<?> registrarMerma(@Valid @RequestBody MermaDTO mermaDTO) {
         try {
-            Merma mermaGuardada = mermaService.registrarMerma(mermaDTO);
+            Merma mermaGuardada = mermaService.registrar(mermaDTO);
             return new ResponseEntity<>(mermaGuardada, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
