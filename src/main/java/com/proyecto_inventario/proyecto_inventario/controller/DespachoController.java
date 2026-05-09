@@ -56,7 +56,7 @@ public class DespachoController {
         return ResponseEntity.ok(despachos);
     }
 
-    @GetMapping("buscarPantente&Fecha/")
+    @GetMapping("buscar-pantente-y-fecha/")
     public ResponseEntity<List<DespachoDTO>> buscarDespachos(@RequestParam String patente, LocalDate fecha){
         List<DespachoDTO> resultados = despachoService.buscarPorCamionYFecha(patente, fecha);
         if(resultados.isEmpty()){

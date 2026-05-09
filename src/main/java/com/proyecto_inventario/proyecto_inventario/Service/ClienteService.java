@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proyecto_inventario.proyecto_inventario.DTO.ClienteDTO;
+import com.proyecto_inventario.proyecto_inventario.DTO.PedidoDTO;
 import com.proyecto_inventario.proyecto_inventario.model.Cliente;
 import com.proyecto_inventario.proyecto_inventario.repository.ClienteRepository;
 
@@ -23,6 +24,17 @@ public class ClienteService {
         dto.setId(cliente.getId());
         dto.setNombre(cliente.getNombre());
         dto.setRut(cliente.getRut());
+        if(cliente.getHistorialPedidos() != null){
+            dto.setHistorialPedidos(cliente.getHistorialPedidos().stream()
+            .map(pedido -> {
+                PedidoDTO pDto = new PedidoDTO();
+                pDto.setId(pedido.getId());
+                pDto.setEstado(pedido.getEstado());
+                pDto.setFechaPedido(pedido.getFechaPedido());
+                return pDto;
+            })
+            .toList());  
+        }
         return dto;
     }
 

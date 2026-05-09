@@ -9,6 +9,6 @@ import com.proyecto_inventario.proyecto_inventario.model.ItemPedido;
 
 @Repository
 public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Integer>{
-    @Query("SELECT  SUM(i.cantidad) FROM itemPedido i where i.pedido.id = :idPedido")
+    @Query("SELECT  SUM(i.cantidad) FROM ItemPedido i where i.pedido.id = :idPedido")
     Integer sumarTotalProductos(@Param("idPedido") Integer idPedido);
 }
