@@ -1,10 +1,8 @@
 package com.proyecto_inventario.proyecto_inventario.service;
 
 import java.util.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.proyecto_inventario.proyecto_inventario.model.Ubicacion;
 import com.proyecto_inventario.proyecto_inventario.repository.UbicacionRepository;
 
