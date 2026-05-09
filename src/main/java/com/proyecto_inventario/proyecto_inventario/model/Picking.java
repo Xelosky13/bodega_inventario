@@ -45,12 +45,12 @@ public class Picking {
     private String estado;
 
     @OneToOne
-    @JoinColumn(name = "pedido_id",nullable = false, unique = true)
-    @NotNull(message = "Se debe asignar un operario picking")
+    @JoinColumn(name = "pedido_id", nullable = false, unique = true)
+    @NotNull(message = "Se debe asignar un pedido")
     private Pedido pedido;
 
     @ManyToOne
     @JoinColumn(name = "operario_id", nullable = false)
-    @NotNull(message = "Se debe asignar un operario al pickiing")
+    @NotNull(message = "Se debe asignar un operario al picking")
     private Operario operario;
 }
