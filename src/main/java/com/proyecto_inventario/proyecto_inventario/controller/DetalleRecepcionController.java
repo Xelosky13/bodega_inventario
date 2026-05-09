@@ -62,7 +62,7 @@ public class DetalleRecepcionController {
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarOrden(@PathVariable Integer id) {
+    public void eliminarDetalle(@PathVariable Integer id) {
         service.deleteById(id);
     }
 
