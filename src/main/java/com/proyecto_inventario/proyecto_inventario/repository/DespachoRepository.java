@@ -12,7 +12,7 @@ import com.proyecto_inventario.proyecto_inventario.model.Despacho;
 public interface DespachoRepository extends JpaRepository<Despacho, Integer>{
     List<Despacho> findByPatenteVehiculo(String patenteVehiculo);
 
-    @Query("SELECT d FROM Despacho d WHERE d.patenteVehiculo = :patente AND d.fechaSalida")
+    @Query("SELECT d FROM Despacho d WHERE d.patenteVehiculo = :patente AND d.fechaSalida = :fecha")
     List<Despacho> buscarPorCamionYFecha(@Param("patente") String patente, @Param("fecha") LocalDate fecha);
     
     @Query("SELECT d FROM Despacho d WHERE d.picking.pedido.cliente.nombre = :nombreCliente")

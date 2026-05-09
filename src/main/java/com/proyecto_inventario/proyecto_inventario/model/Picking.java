@@ -51,6 +51,6 @@ public class Picking {
 
     @ManyToOne
     @JoinColumn(name = "operario_id", nullable = false)
-    @NotNull(message = "Se debe asignar un operario al pickiing")
+    @NotNull(message = "Se debe asignar un operario al picking")
     private Operario operario;
 }

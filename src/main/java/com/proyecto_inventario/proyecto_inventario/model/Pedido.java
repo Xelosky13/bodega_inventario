@@ -50,7 +50,6 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> items;
 
-
     @OneToOne(mappedBy = "pedido")
     private Picking picking;
 }

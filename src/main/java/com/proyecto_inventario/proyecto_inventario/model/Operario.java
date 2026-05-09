@@ -43,5 +43,5 @@ public class Operario {
     @Column(nullable = false, length =  6)
 
     @OneToMany(mappedBy = "operario")
-    private List<Pedido> pedidosAsignados;
+    private List<Picking> pedidosAsignados;
 }
