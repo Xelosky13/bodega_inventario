@@ -19,6 +19,8 @@ import com.proyecto_inventario.proyecto_inventario.DTO.ItemPedidoDTO;
 import com.proyecto_inventario.proyecto_inventario.Service.ItemPedidoService;
 import com.proyecto_inventario.proyecto_inventario.model.ItemPedido;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/items")
 public class ItemPedidoController {
@@ -46,7 +48,7 @@ public class ItemPedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<ItemPedido> agregarItemPedido(@RequestBody ItemPedido item) {
+    public ResponseEntity<ItemPedido> agregarItemPedido(@Valid @RequestBody ItemPedido item) {
         try {
             ItemPedido guardado = itemPedidoService.guardarItemPedido(item);
             return new ResponseEntity<>(guardado, HttpStatus.CREATED);
@@ -56,7 +58,7 @@ public class ItemPedidoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ItemPedido> editarItemPedido(@PathVariable Integer id, @RequestBody ItemPedido itemPedido) {
+    public ResponseEntity<ItemPedido> editarItemPedido(@PathVariable Integer id, @Valid @RequestBody ItemPedido itemPedido) {
         try {
             ItemPedido editado = itemPedidoService.guardarItemPedido(itemPedido);
             return new ResponseEntity<>(editado, HttpStatus.OK);
@@ -66,7 +68,7 @@ public class ItemPedidoController {
     }    
 
     @PutMapping("/{id}")
-    public ResponseEntity<ItemPedido> actualizarItemPedido(@PathVariable Integer id, @RequestBody ItemPedido itemPedido){
+    public ResponseEntity<ItemPedido> actualizarItemPedido(@PathVariable Integer id, @Valid @RequestBody ItemPedido itemPedido){
         try{
             ItemPedido actualizado = itemPedidoService.actualizarItemPedido( id, itemPedido);
             return new ResponseEntity<>(actualizado, HttpStatus.OK);

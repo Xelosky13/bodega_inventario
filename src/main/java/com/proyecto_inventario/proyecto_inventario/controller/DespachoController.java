@@ -21,6 +21,8 @@ import com.proyecto_inventario.proyecto_inventario.DTO.DespachoDTO;
 import com.proyecto_inventario.proyecto_inventario.Service.DespachoService;
 import com.proyecto_inventario.proyecto_inventario.model.Despacho;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/despachos")
 public class DespachoController {
@@ -66,7 +68,7 @@ public class DespachoController {
     }
 
     @PostMapping
-    public ResponseEntity<Despacho> agregarDespacho(@RequestBody Despacho despacho) {
+    public ResponseEntity<Despacho> agregarDespacho(@Valid @RequestBody Despacho despacho) {
         try {
             Despacho guardado = despachoService.guardarDespacho(despacho);
             return new ResponseEntity<>(guardado, HttpStatus.CREATED);
@@ -76,7 +78,7 @@ public class DespachoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Despacho> editarDespacho(@PathVariable Integer id, @RequestBody Despacho despacho) {
+    public ResponseEntity<Despacho> editarDespacho(@PathVariable Integer id, @Valid @RequestBody Despacho despacho) {
         try {
             Despacho editado = despachoService.guardarDespacho(despacho);
             return new ResponseEntity<>(editado, HttpStatus.OK);
@@ -86,7 +88,7 @@ public class DespachoController {
     }    
 
     @PutMapping("/{id}")
-    public ResponseEntity<Despacho> actualizarCliente(@PathVariable Integer id, @RequestBody Despacho despacho){
+    public ResponseEntity<Despacho> actualizarCliente(@PathVariable Integer id,@Valid @RequestBody Despacho despacho){
         try{
             Despacho actualizado = despachoService.actualizarDespacho( id, despacho);
             return new ResponseEntity<>(actualizado, HttpStatus.OK);

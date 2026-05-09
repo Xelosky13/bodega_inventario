@@ -19,6 +19,8 @@ import com.proyecto_inventario.proyecto_inventario.DTO.ClienteDTO;
 import com.proyecto_inventario.proyecto_inventario.Service.ClienteService;
 import com.proyecto_inventario.proyecto_inventario.model.Cliente;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/clientes")
 public class ClienteController {
@@ -66,7 +68,7 @@ public class ClienteController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Cliente> editarCliente(@PathVariable Integer id, @RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> editarCliente(@PathVariable Integer id, @Valid @RequestBody Cliente cliente) {
         try {
             Cliente editado = clienteService.guardarCliente(cliente);
             return new ResponseEntity<>(editado, HttpStatus.OK);
@@ -76,7 +78,7 @@ public class ClienteController {
     }    
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> actualizarCliente(@PathVariable Integer id, @RequestBody Cliente cliente){
+    public ResponseEntity<Cliente> actualizarCliente(@PathVariable Integer id,@Valid @RequestBody Cliente cliente){
         try{
             Cliente actualizado = clienteService.actualizarCliente( id, cliente);
             return new ResponseEntity<>(actualizado, HttpStatus.OK);
