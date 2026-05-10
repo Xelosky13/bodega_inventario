@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Builder
@@ -41,7 +42,9 @@ public class Operario {
     @NotBlank(message = "EL turno es obligatorio")
     @Size(min = 5, max = 6, message = "Turno debe ser Mañana , Tarde O Noche?")
     @Column(nullable = false, length = 6)
+    private String turno;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "operario")
     private List<Picking> pedidosAsignados;
 }
