@@ -12,8 +12,6 @@ public interface UbicacionRepository extends JpaRepository<Ubicacion, Integer> {
 
     public ArrayList<Ubicacion> findByPasillo(Integer pasillo);
 
-    public ArrayList<Ubicacion> findByDescripcionAllIgnoreCase(String descripcion);
-
     public ArrayList<Ubicacion> findByEstante(Integer estante);
 
 }
