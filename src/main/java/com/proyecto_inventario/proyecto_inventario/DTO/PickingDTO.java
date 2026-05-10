@@ -1,7 +1,6 @@
 package com.proyecto_inventario.proyecto_inventario.DTO;
 
 import java.time.LocalDateTime;
-
 import lombok.Data;
 
 @Data
