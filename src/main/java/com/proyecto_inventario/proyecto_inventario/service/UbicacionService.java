@@ -38,11 +38,6 @@ public class UbicacionService {
 
     }
 
-    public List<UbicacionDTO> buscarPorDescripcion(String descripcion) {
-        List<Ubicacion> ubis = repository.findByDescripcionAllIgnoreCase(descripcion);
-        return ubis.stream().map(this::mappearADto).toList();
-    }
-
     public List<UbicacionDTO> buscarPorEstante(Integer estante) {
         List<Ubicacion> ubis = repository.findByEstante(estante);
         return ubis.stream().map(this::mappearADto).toList();
@@ -53,9 +48,16 @@ public class UbicacionService {
 
     }
 
-    public UbicacionDTO guardarUbicacion(Ubicacion ubi) {
-        Ubicacion ubic = repository.save(ubi);
-        return this.mappearADto(ubic);
+    public UbicacionDTO guardarUbicacion(UbicacionDTO ubi) {
+        Ubicacion ubica = new Ubicacion();
+
+        ubica.setDescripcion(ubi.getDescripcion());
+        ubica.setEstante(ubi.getEstante());
+        ubica.setPasillo(ubi.getPasillo());
+        ubica.setProductos(ubi.getProductos());
+
+        Ubicacion guardado = repository.save(ubica);
+        return this.mappearADto(guardado);
     }
 
     public void actualizarUbicacion(Integer id, Ubicacion ubi) {

@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.proyecto_inventario.proyecto_inventario.DTO.OrdenRecepcionDTO;
 import com.proyecto_inventario.proyecto_inventario.DTO.ProveedorDTO;
 import com.proyecto_inventario.proyecto_inventario.model.OrdenRecepcion;
 import com.proyecto_inventario.proyecto_inventario.model.Proveedor;
@@ -56,16 +57,21 @@ public class ProveedorService {
 
     }
 
-    public ProveedorDTO buscarPorTelefono(String telefono) {
-        Proveedor prov = proveRepo.findByTelefono(telefono);
-
-        return this.mapearADTO(prov);
-    }
-
     public List<ProveedorDTO> Proveedores() {
         List<Proveedor> provs = proveRepo.findAll();
 
         return provs.stream().map(this::mapearADTO).toList();
+    }
+
+    public ProveedorDTO guardarProveedor(ProveedorDTO dto) {
+        Proveedor pro = new Proveedor();
+        pro.setNombre(dto.getNombre());
+        pro.setNombreContacto(dto.getNombreContacto());
+        pro.setOrdenes(dto.getOrdenes());
+        pro.setRut(dto.getRut());
+        pro.setTelefono(dto.getTelefono());
+        Proveedor guardado = proveRepo.save(pro);
+        return this.mapearADTO(guardado);
     }
 
     public void eliminarProveedor(Integer id) {

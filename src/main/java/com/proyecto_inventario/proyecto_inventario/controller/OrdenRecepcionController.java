@@ -55,7 +55,7 @@ public class OrdenRecepcionController {
     }
 
     @PutMapping("/{id}")
-    public void actualizarOrden(@PathVariable Integer id, OrdenRecepcionDTO dto) {
+    public void actualizarOrden(@PathVariable Integer id, @RequestBody OrdenRecepcionDTO dto) {
         service.actualizarOrden(id, dto);
     }
 
