@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Builder
@@ -41,7 +42,7 @@ public class Producto {
     @Column(unique = true, nullable = false, length = 50)
     private String sku;
 
-    @NotNull(message =  "El stock es obligatorio")
+    @NotNull(message = "El stock es obligatorio")
     @Min(value = 0, message = "El stock no puede ser negativo")
     @Column(nullable = false, length = 5)
     private Integer stockActual;
@@ -50,6 +51,7 @@ public class Producto {
     @JoinColumn(name = "ubicacion_id", nullable = false)
     private Ubicacion ubicacion;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "producto")
     private List<DetalleRecepcion> detalles;
 }

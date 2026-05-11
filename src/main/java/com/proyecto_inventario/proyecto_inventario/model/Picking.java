@@ -45,7 +45,7 @@ public class Picking {
     private String estado;
 
     @OneToOne
-    @JoinColumn(name = "pedido_id",nullable = false, unique = true)
+    @JoinColumn(name = "pedido_id", nullable = false, unique = true)
     @NotNull(message = "Se debe asignar un pedido")
     private Pedido pedido;
 
