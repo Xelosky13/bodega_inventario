@@ -70,8 +70,17 @@ public class PedidoService {
 
     @Transactional
     public Pedido guardarPedido(Pedido pedido){
-        if(pedido.getItems() != null){
-            pedido.getItems().forEach(item -> item.setPedido(pedido));
+        if(pedido.getItems() == null || pedido.getItems().isEmpty()){
+            throw new RuntimeException("No se puede crear un pepido sin items");
+        }
+        for (ItemPedido item : pedido.getItems()){
+            item.setPedido(pedido);
+            int filasActualizadas = productoRepository.descontarStock(
+                item.getProducto().getId(), item.getCantidad()
+            );
+            if(filasActualizadas == 0){
+                throw new RuntimeException("Stock insuficiente para el producto id : " + item.getProducto().getId());
+            }
         }
         return pedidoRepository.save(pedido);
     }
