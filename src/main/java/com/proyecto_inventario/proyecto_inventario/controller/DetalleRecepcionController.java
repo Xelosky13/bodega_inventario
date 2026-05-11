@@ -51,16 +51,6 @@ public class DetalleRecepcionController {
 
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<DetalleRecepcionDTO> buscarPorOrden(@PathVariable Integer id) {
-        DetalleRecepcionDTO dto = service.buscarPorOrden(id);
-        if (dto == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(dto);
-
-    }
-
     @DeleteMapping("/{id}")
     public void eliminarDetalle(@PathVariable Integer id) {
         service.deleteById(id);

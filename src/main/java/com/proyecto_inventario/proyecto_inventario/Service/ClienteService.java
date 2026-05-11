@@ -1,4 +1,4 @@
-package com.proyecto_inventario.proyecto_inventario.Service;
+package com.proyecto_inventario.proyecto_inventario.service;
 
 import java.util.List;
 
@@ -95,6 +95,4 @@ public class ClienteService {
         }
         return clienteRepository.save(actualizado);
     }
-
-
 }

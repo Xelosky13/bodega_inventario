@@ -2,6 +2,9 @@ package com.proyecto_inventario.proyecto_inventario.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +30,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Table(name = "productos")
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class, 
+    property = "id")
 public class Producto {
 
     @Id

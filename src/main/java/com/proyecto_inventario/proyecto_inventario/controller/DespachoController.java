@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto_inventario.proyecto_inventario.DTO.DespachoDTO;
-import com.proyecto_inventario.proyecto_inventario.Service.DespachoService;
 import com.proyecto_inventario.proyecto_inventario.model.Despacho;
+import com.proyecto_inventario.proyecto_inventario.service.DespachoService;
 
 import jakarta.validation.Valid;
 

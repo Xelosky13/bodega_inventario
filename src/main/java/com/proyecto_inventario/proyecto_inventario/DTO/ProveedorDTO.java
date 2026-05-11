@@ -13,5 +13,4 @@ public class ProveedorDTO {
     private String telefono;
     private String nombreContacto;
     private List<OrdenRecepcion> ordenes;
-
 }

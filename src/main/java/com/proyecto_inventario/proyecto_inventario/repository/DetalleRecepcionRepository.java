@@ -14,8 +14,6 @@ public interface DetalleRecepcionRepository extends JpaRepository<DetalleRecepci
 
     public DetalleRecepcion findDetalleRecepcionById(Integer Id);
 
-    public DetalleRecepcion findbyOrden(Integer Id);
-
     public List<DetalleRecepcion> findByEstado(String estado);
 
     public DetalleRecepcion findByProducto(Producto producto);

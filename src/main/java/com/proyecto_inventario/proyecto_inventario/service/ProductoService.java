@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.proyecto_inventario.proyecto_inventario.DTO.ProductoDTO;
+import com.proyecto_inventario.proyecto_inventario.DTO.UbicacionDTO;
 import com.proyecto_inventario.proyecto_inventario.model.Producto;
 import com.proyecto_inventario.proyecto_inventario.repository.ProductoRepository;
 
@@ -21,6 +23,21 @@ public class ProductoService {
     public Producto obtenerPorId(Integer id) {
         return productoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
+    }
+
+    private ProductoDTO convertirADTO(Producto entidad) {
+        ProductoDTO dto = new ProductoDTO();
+        dto.setId(entidad.getId());
+        dto.setNombre(entidad.getNombre());
+        dto.setSku(entidad.getSku());
+            if (entidad.getUbicacion() != null) {
+                UbicacionDTO uDto = new UbicacionDTO();
+                uDto.setId(entidad.getUbicacion().getId());
+                uDto.setPasillo(entidad.getUbicacion().getPasillo());
+                uDto.setEstante(entidad.getUbicacion().getEstante());
+                dto.setUbicacion(uDto);
+            }
+        return dto;
     }
 
     public Producto crear(Producto producto) {

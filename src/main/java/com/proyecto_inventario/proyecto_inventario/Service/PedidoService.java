@@ -1,4 +1,4 @@
-package com.proyecto_inventario.proyecto_inventario.Service;
+package com.proyecto_inventario.proyecto_inventario.service;
 
 import java.util.List;
 
@@ -68,7 +68,11 @@ public class PedidoService {
         }
     }
 
+    @Transactional
     public Pedido guardarPedido(Pedido pedido){
+        if(pedido.getItems() != null){
+            pedido.getItems().forEach(item -> item.setPedido(pedido));
+        }
         return pedidoRepository.save(pedido);
     }
 

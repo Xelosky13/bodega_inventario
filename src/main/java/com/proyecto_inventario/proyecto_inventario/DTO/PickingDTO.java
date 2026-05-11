@@ -11,6 +11,5 @@ public class PickingDTO {
     private String nombreOperario;
     private Integer pedidoId;
     private LocalDateTime fechaInicio;
-    private LocalDateTime fechaFin;
     private String estado;
 }

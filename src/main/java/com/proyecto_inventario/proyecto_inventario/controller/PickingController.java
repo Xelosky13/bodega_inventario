@@ -18,7 +18,7 @@ import com.proyecto_inventario.proyecto_inventario.DTO.PickingDTO;
 import com.proyecto_inventario.proyecto_inventario.service.PickingService;
 
 @RestController
-@RequestMapping("/api/pickings")
+@RequestMapping("/api/v1/pickings")
 public class PickingController {
 
     @Autowired

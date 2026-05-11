@@ -44,11 +44,6 @@ public class DetalleRecepcionService {
 
     }
 
-    public DetalleRecepcionDTO buscarPorOrden(Integer id) {
-        DetalleRecepcion detalle = repository.findbyOrden(id);
-        return this.mappearADTO(detalle);
-    }
-
     /*
      * public DetalleRecepcionDTO buscarPorProducto(Producto producto) {
      * DetalleRecepcion detalle=repository.findByProducto(producto);

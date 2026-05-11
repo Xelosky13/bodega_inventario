@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto_inventario.proyecto_inventario.DTO.ItemPedidoDTO;
-import com.proyecto_inventario.proyecto_inventario.Service.ItemPedidoService;
 import com.proyecto_inventario.proyecto_inventario.model.ItemPedido;
+import com.proyecto_inventario.proyecto_inventario.service.ItemPedidoService;
 
 import jakarta.validation.Valid;
 

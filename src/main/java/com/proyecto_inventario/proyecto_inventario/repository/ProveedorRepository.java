@@ -13,7 +13,4 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Integer> {
     public List<Proveedor> findByNombre(String nombre);
 
     public Proveedor findByRut(String rut);
-
-    public Proveedor findByOrdenRecepcionId(Integer id);
-
 }

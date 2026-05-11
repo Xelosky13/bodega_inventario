@@ -9,7 +9,7 @@ import com.proyecto_inventario.proyecto_inventario.service.MermaService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/mermas")
+@RequestMapping("/api/v1/mermas")
 public class MermaController {
 
     @Autowired

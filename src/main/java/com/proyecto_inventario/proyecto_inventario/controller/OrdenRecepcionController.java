@@ -39,7 +39,7 @@ public class OrdenRecepcionController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/proveedor/{id}")
     public ResponseEntity<OrdenRecepcionDTO> buscarPorproveedor(@PathVariable Integer id) {
         OrdenRecepcionDTO dto = service.buscarPorProveedor(id);
         if (dto == null) {

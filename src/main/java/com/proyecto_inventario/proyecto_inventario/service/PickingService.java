@@ -52,7 +52,6 @@ public class PickingService {
         picking.setOperario(operario);
         picking.setPedido(pedido);
         picking.setFechaInicio(dto.getFechaInicio());
-        picking.setFechaFin(dto.getFechaFin());
         picking.setEstado(dto.getEstado());
 
         return convertirADTO(pickingRepository.save(picking));
@@ -73,7 +72,6 @@ public class PickingService {
         picking.setOperario(operario);
         picking.setPedido(pedido);
         picking.setFechaInicio(dto.getFechaInicio());
-        picking.setFechaFin(dto.getFechaFin());
         picking.setEstado(dto.getEstado());
 
         return convertirADTO(pickingRepository.save(picking));
@@ -93,7 +91,6 @@ public class PickingService {
         dto.setNombreOperario(picking.getOperario().getNombre());
         dto.setPedidoId(picking.getPedido().getId());
         dto.setFechaInicio(picking.getFechaInicio());
-        dto.setFechaFin(picking.getFechaFin());
         dto.setEstado(picking.getEstado());
         return dto;
     }

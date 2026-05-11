@@ -20,7 +20,7 @@ import com.proyecto_inventario.proyecto_inventario.repository.ProductoRepository
 import com.proyecto_inventario.proyecto_inventario.service.ProductoService;
 
 @RestController
-@RequestMapping("/api/productos")
+@RequestMapping("/api/v1/productos")
 public class ProductoController {
 
     @Autowired

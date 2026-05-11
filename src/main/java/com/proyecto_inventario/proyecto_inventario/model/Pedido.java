@@ -3,8 +3,12 @@ package com.proyecto_inventario.proyecto_inventario.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +19,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,10 +35,13 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull(message = "La fecha es obligatoria")
-    @PastOrPresent(message = "La fecha no puede ser futura")
     @Column(nullable = false)
     private LocalDateTime fechaPedido;
+
+    @PrePersist
+    protected void onCreate() {
+        this.fechaPedido = LocalDateTime.now();
+    }
 
     @NotBlank(message = "El estado del pedido es obligatorio")
     @Size(min = 7, max = 13, message = "Estado debe ser Pendiente, Picking o Completado" )
@@ -47,7 +53,8 @@ public class Pedido {
     @NotNull(message = "El pedido debe estar asociado a un cliente")
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("pedido")
     private List<ItemPedido> items;
 
     @OneToOne(mappedBy = "pedido")

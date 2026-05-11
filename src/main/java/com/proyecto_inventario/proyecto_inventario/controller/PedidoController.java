@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto_inventario.proyecto_inventario.DTO.PedidoDTO;
-import com.proyecto_inventario.proyecto_inventario.Service.PedidoService;
 import com.proyecto_inventario.proyecto_inventario.model.Pedido;
+import com.proyecto_inventario.proyecto_inventario.service.PedidoService;
 
 @RestController
 @RequestMapping("/api/v1/pedidos")
@@ -52,6 +52,7 @@ public class PedidoController {
             Pedido guardado = pedidoService.guardarPedido(pedido);
             return new ResponseEntity<>(guardado, HttpStatus.CREATED);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

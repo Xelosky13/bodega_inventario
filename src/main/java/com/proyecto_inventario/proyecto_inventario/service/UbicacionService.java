@@ -54,7 +54,6 @@ public class UbicacionService {
         ubica.setDescripcion(ubi.getDescripcion());
         ubica.setEstante(ubi.getEstante());
         ubica.setPasillo(ubi.getPasillo());
-        ubica.setProductos(ubi.getProductos());
 
         Ubicacion guardado = repository.save(ubica);
         return this.mappearADto(guardado);
