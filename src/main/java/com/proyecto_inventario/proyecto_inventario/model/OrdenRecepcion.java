@@ -3,6 +3,11 @@ package com.proyecto_inventario.proyecto_inventario.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.annotation.CreatedDate;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +17,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,19 +29,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "ordenes_recepcion")
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class, 
+    property = "id")
 public class OrdenRecepcion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull(message = "La fecha de recepcion es obligatoria")
+    
     @PastOrPresent(message = "La fecha no puede ser futura")
     @Column(nullable = false)
+    @CreatedDate
     private LocalDate fechaRecepcion;
 
     @ManyToOne
-    @JoinColumn(name = "proveedor_id", nullable =  false)
+    @JoinColumn(name = "proveedor_id", nullable = false)
     private Proveedor proveedor;
 
     @OneToMany(mappedBy = "orden")

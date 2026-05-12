@@ -2,6 +2,9 @@ package com.proyecto_inventario.proyecto_inventario.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,6 +22,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Builder
@@ -26,6 +30,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "productos")
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class, 
+    property = "id")
 public class Producto {
 
     @Id
@@ -41,7 +48,7 @@ public class Producto {
     @Column(unique = true, nullable = false, length = 50)
     private String sku;
 
-    @NotNull(message =  "El stock es obligatorio")
+    @NotNull(message = "El stock es obligatorio")
     @Min(value = 0, message = "El stock no puede ser negativo")
     @Column(nullable = false, length = 5)
     private Integer stockActual;
@@ -50,6 +57,7 @@ public class Producto {
     @JoinColumn(name = "ubicacion_id", nullable = false)
     private Ubicacion ubicacion;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "producto")
     private List<DetalleRecepcion> detalles;
 }

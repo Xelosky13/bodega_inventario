@@ -2,6 +2,8 @@ package com.proyecto_inventario.proyecto_inventario.model;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,9 +33,9 @@ public class Despacho {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull(message = "La fecha de salida es obligatoria")
     @PastOrPresent(message = "La fecha no puede ser futura")
     @Column(nullable = false)
+    @CreatedDate
     private LocalDateTime fechaSalida;
 
     @NotBlank(message = "El transportista o empresa es obligatorio")

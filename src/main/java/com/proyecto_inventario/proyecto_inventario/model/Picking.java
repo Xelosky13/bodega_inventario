@@ -10,10 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,12 +32,13 @@ public class Picking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull(message = "La fecha de inicio es obligatoria")
-    @PastOrPresent(message = "La fecha no puede ser futura")
     @Column(nullable = false)
     private LocalDateTime fechaInicio;
 
-    private LocalDateTime fechaFin;
+    @PrePersist
+    protected void onCreate() {
+        this.fechaInicio = LocalDateTime.now();
+    }
 
     @NotBlank(message = "El estado del picking es obligatorio")
     @Size(min = 10, max = 11, message = "Estado debe ser En Proceso o Completado")
@@ -45,12 +46,12 @@ public class Picking {
     private String estado;
 
     @OneToOne
-    @JoinColumn(name = "pedido_id",nullable = false, unique = true)
-    @NotNull(message = "Se debe asignar un operario picking")
+    @JoinColumn(name = "pedido_id", nullable = false, unique = true)
+    @NotNull(message = "Se debe asignar un pedido")
     private Pedido pedido;
 
     @ManyToOne
     @JoinColumn(name = "operario_id", nullable = false)
-    @NotNull(message = "Se debe asignar un operario al pickiing")
+    @NotNull(message = "Se debe asignar un operario al picking")
     private Operario operario;
 }

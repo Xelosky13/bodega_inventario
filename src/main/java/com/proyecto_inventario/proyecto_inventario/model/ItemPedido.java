@@ -1,5 +1,7 @@
 package com.proyecto_inventario.proyecto_inventario.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,12 +36,10 @@ public class ItemPedido {
 
     @ManyToOne
     @JoinColumn(name = "pedido_id", nullable = false)
+    @JsonIgnoreProperties("items")
     private Pedido pedido;
 
     @ManyToOne
     @JoinColumn(name = "producto_id", nullable = false)
     private Producto producto;
-
-    
-
 }

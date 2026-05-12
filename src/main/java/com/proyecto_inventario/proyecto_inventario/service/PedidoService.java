@@ -1,0 +1,129 @@
+package com.proyecto_inventario.proyecto_inventario.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.proyecto_inventario.proyecto_inventario.DTO.ItemPedidoDTO;
+import com.proyecto_inventario.proyecto_inventario.DTO.PedidoDTO;
+import com.proyecto_inventario.proyecto_inventario.model.ItemPedido;
+import com.proyecto_inventario.proyecto_inventario.model.Pedido;
+import com.proyecto_inventario.proyecto_inventario.model.Producto;
+import com.proyecto_inventario.proyecto_inventario.repository.ItemPedidoRepository;
+import com.proyecto_inventario.proyecto_inventario.repository.PedidoRepository;
+import com.proyecto_inventario.proyecto_inventario.repository.ProductoRepository;
+
+import jakarta.transaction.Transactional;
+
+@Service
+@Transactional
+public class PedidoService {
+    
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
+
+    public PedidoDTO convertirADTO(Pedido pedido){
+        PedidoDTO dto = new PedidoDTO();
+        dto.setId(pedido.getId());
+        dto.setEstado(pedido.getEstado());
+        dto.setFechaPedido(pedido.getFechaPedido());
+        dto.setNombreCliente(pedido.getCliente().getNombre());
+        List<ItemPedidoDTO> itemsDTOs = pedido.getItems().stream().map(item ->{
+            ItemPedidoDTO itemDto = new ItemPedidoDTO();
+            itemDto.setNombreProducto(item.getProducto().getNombre());
+            itemDto.setCantidad(item.getCantidad());
+            return itemDto;
+        }).toList();
+        dto.setItems(itemsDTOs);
+        return dto;
+    }
+
+    public List<PedidoDTO> obtenerTodos(){
+        return pedidoRepository.findAll().stream()
+                .map(this::convertirADTO)
+                .toList();
+    }
+
+    public PedidoDTO buscarPorId(Integer id){
+        Pedido pedido = pedidoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+        return convertirADTO(pedido);
+    }
+
+    public String eliminar(Integer id){
+        try {
+            Pedido pedido = pedidoRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("No se puede eliminar, el pedido "+ id + "eliminado"));
+            pedidoRepository.delete(pedido);
+            return "El pedido " + pedido.getId() + "ha sido eliminado";
+        } catch (RuntimeException e){
+            return e.getMessage();
+        }
+    }
+
+    @Transactional
+    public Pedido guardarPedido(Pedido pedido){
+        if(pedido.getItems() == null || pedido.getItems().isEmpty()){
+            throw new RuntimeException("No se puede crear un pepido sin items");
+        }
+        for (ItemPedido item : pedido.getItems()){
+            item.setPedido(pedido);
+            int filasActualizadas = productoRepository.descontarStock(
+                item.getProducto().getId(), item.getCantidad()
+            );
+            if(filasActualizadas == 0){
+                throw new RuntimeException("Stock insuficiente para el producto id : " + item.getProducto().getId());
+            }
+        }
+        return pedidoRepository.save(pedido);
+    }
+
+    public String añadirItemAPedido(Integer pedidoId, Integer productoId, Integer cantidad){
+        Pedido pedido = pedidoRepository.findById(pedidoId)
+            .orElseThrow(() -> new RuntimeException("Error: Pedido no existe"));
+        Producto producto = productoRepository.findById(productoId)
+            .orElseThrow(() -> new RuntimeException("Error : Producto no existe"));
+        ItemPedido nuevoItem = new ItemPedido();
+        nuevoItem.setPedido(pedido);
+        nuevoItem.setProducto(producto);
+        nuevoItem.setCantidad(cantidad);
+        itemPedidoRepository.save(nuevoItem);
+
+        return "Exito: Se agregaron "+ cantidad + "unidades de " + 
+                producto.getNombre() + "al Pedido #" + pedidoId;
+    }
+
+    public Pedido actualizarPedido(Integer id,Pedido pedido){
+        Pedido pedido2 = pedidoRepository.findById(id).orElseThrow(() -> 
+                new RuntimeException("Pedido no existe"));
+        if(pedido.getCliente() != null){
+            pedido2.setCliente(pedido.getCliente()); 
+        }
+        if(pedido.getEstado() != null){
+            pedido2.setEstado(pedido.getEstado());
+        }
+        if(pedido.getFechaPedido() != null){
+            pedido2.setFechaPedido(pedido.getFechaPedido());
+        }
+        if(pedido.getItems() != null){
+            pedido2.getItems().clear();
+            pedido.getItems().forEach(item -> {
+                item.setPedido(pedido2);
+                pedido2.getItems().add(item);
+            });
+        }
+        return pedidoRepository.save(pedido2);
+    }
+
+    public List<PedidoDTO> obtenerPendientesPorCliente(String rut){
+        List<Pedido> pendientes = pedidoRepository.buscarPendientesPorCliente(rut);
+        return pendientes.stream().map(this::convertirADTO).toList();
+    }
+}

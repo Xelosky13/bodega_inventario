@@ -2,6 +2,8 @@ package com.proyecto_inventario.proyecto_inventario.model;
 
 import java.time.LocalDate;
 
+import org.springframework.data.annotation.CreatedDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,9 +34,9 @@ public class Merma {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull(message = "La fecha de la merma es obligatoria")
     @PastOrPresent(message = "La fecha no puede ser futura")
     @Column(nullable = false)
+    @CreatedDate
     private LocalDate fechaReporte;
 
     @NotNull(message = "La cantidad mermada es obligatoria")
