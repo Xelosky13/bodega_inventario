@@ -3,8 +3,6 @@ package com.proyecto_inventario.proyecto_inventario.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.proyecto_inventario.proyecto_inventario.DTO.OrdenRecepcionDTO;
 import com.proyecto_inventario.proyecto_inventario.DTO.ProveedorDTO;
 import com.proyecto_inventario.proyecto_inventario.model.OrdenRecepcion;
 import com.proyecto_inventario.proyecto_inventario.model.Proveedor;
