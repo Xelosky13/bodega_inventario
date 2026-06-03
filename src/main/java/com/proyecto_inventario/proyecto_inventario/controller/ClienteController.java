@@ -20,16 +20,20 @@ import com.proyecto_inventario.proyecto_inventario.DTO.ClienteDTO;
 import com.proyecto_inventario.proyecto_inventario.model.Cliente;
 import com.proyecto_inventario.proyecto_inventario.service.ClienteService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/clientes")
+@Tag(name = "Clientes", description = "Operaciones relacionadas con clientes")
 public class ClienteController {
     
     @Autowired
     private ClienteService clienteService;
 
     @GetMapping
+    @Operation(summary = "Obtener todos los clientes", description = "Lista de todos los clientes")
     public ResponseEntity<List<ClienteDTO>> todosLosClientes(){
         List<ClienteDTO> clientes = clienteService.obtenerTodos();
         if(clientes.isEmpty()){
@@ -39,6 +43,7 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Buscar clientes por ID", description = "Busca un cliente por ID de la base de datos")
     public ResponseEntity<ClienteDTO> buscarPorId(@PathVariable Integer id){
         try {
             ClienteDTO cliente = clienteService.buscarPorId(id);
@@ -49,6 +54,7 @@ public class ClienteController {
     }
 
     @GetMapping("rut/{rut}")
+    @Operation(summary = "Busca un cliente por rut", description = "Buscar cliente por su rut de registro")
     public ResponseEntity<ClienteDTO> buscarPorRut(@PathVariable String rut){
         try {
             ClienteDTO cliente = clienteService.buscarPorRut(rut);
@@ -59,6 +65,7 @@ public class ClienteController {
     }
     
     @PostMapping
+    @Operation(summary = "Crear un nuevo cliente")
     public ResponseEntity<Cliente> agregarCliente(@RequestBody Cliente cliente) {
         try {
             Cliente guardado = clienteService.guardarCliente(cliente);
@@ -69,6 +76,7 @@ public class ClienteController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Editar un cliente", description = "Edita algunos datos del cliente")
     public ResponseEntity<Cliente> editarCliente(@PathVariable Integer id, @Valid @RequestBody Cliente cliente) {
         try {
             Cliente editado = clienteService.guardarCliente(cliente);
@@ -79,6 +87,7 @@ public class ClienteController {
     }    
 
     @PutMapping("/{id}")
+    @Operation(summary = "Actualizar un cliente", description = "Actualiza todos los datos de un cliente")
     public ResponseEntity<Cliente> actualizarCliente(@PathVariable Integer id,@Valid @RequestBody Cliente cliente){
         try{
             Cliente actualizado = clienteService.actualizarCliente( id, cliente);
@@ -89,6 +98,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar un cliente")
     public ResponseEntity<String> eliminarCliente(@PathVariable Integer id) {
         String resultado = clienteService.eliminar(id);
         
